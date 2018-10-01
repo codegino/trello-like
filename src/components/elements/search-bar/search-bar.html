@@ -1,0 +1,39 @@
+<template id="search-bar-template">
+	<style>
+		.search-bar-wrapper {
+			position:absolute;
+			height:70px;
+			display:block;
+			left:0;
+			right:0;
+			top:0;
+		}
+
+		.search-bar-wrapper .search-bar-container {
+			display:flex;
+			width:100%;
+			height:100%;
+			background-color:#026aa7;
+		}
+
+		.search-bar-wrapper .search-bar-container .search-field {
+			height:30px;
+			width:20%;
+			margin-top:auto;
+			margin-bottom: auto;
+			margin-left:30px;
+			border-radius:3px;
+			padding: 5px 4px 5px;
+		}
+
+		.search-bar-wrapper .search-bar-container .search-field:focus {
+			outline: none;
+		}
+
+	</style>
+	<div class="search-bar-wrapper">
+		<div class="search-bar-container">
+		</div>
+	</div>
+</template>
+<script src="/components/elements/search-bar/search-bar.js"></script>
