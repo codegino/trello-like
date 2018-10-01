@@ -26,7 +26,7 @@
 			searchField.placeholder = 'Search';
 			searchField.className = 'search-field';
 
-			//Add an on change event for the search field
+			//Add a on change event for the search field
 			searchField.oninput = () => {
 				let event = new CustomEvent("SearchingCard", {
 					searchQuery : this.value
