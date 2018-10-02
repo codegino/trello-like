@@ -1,0 +1,115 @@
+		.cards-list{
+			display:block;
+			height:auto;
+			min-height:70px;
+			width:100%;
+			position: relative;
+			z-index: 	10;
+		}
+
+		.cards-list .column-title{
+			font-size:20px;
+			font-family:sans-serif;
+			text-align: left;
+			width:100%;
+			margin-bottom:10px;
+			display:inline-flex;
+			position:absolute;
+
+		}
+
+		.cards-list .cards.drag-active{
+			margin-top:70px;
+		}
+
+		.cards-list .cards{
+			background-color:white;
+			border-radius:3px;
+			height:auto;
+			min-height:30px;
+			display:block;
+			margin-top:15px;
+			cursor:pointer;
+			position:relative;
+			padding:10px 8px 10px;
+			overflow:hidden;
+		}
+
+
+		.cards-list .cards .card-title{
+			font-family: sans-serif;
+			font-size:18px;
+			height:20px;
+			display:inline-block;
+			margin-bottom:10px;
+			position:relative;
+			width:65%;
+			outline:none;
+			border:none;
+			overflow:hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			background:transparent;
+			color:black;
+		}
+
+		.cards-list .cards .delete-btn{
+			width:20px;
+			height:20px;
+			position:absolute;
+			right:10px;
+			z-index: 100;
+			content:url('../img/delete-icon.jpg');
+		}
+
+		.cards-list .cards .edit-btn{
+			width:20px;
+			height:20px;
+			position:absolute;
+			right:40px;
+			z-index: 100;
+			content:url('../img/pencil-icon.png');
+		}
+
+		.cards-list .cards .cancel-btn{
+			width:14px;
+			height:14px;
+			position:absolute;
+			right:12px;
+			top:14px;
+			z-index: 100;
+			content:url('../img/close-icon-v2.png');
+		}
+
+		.cards-list .cards .save-btn{
+			width:60px;
+			height:18px;
+			position:absolute;
+			right:34px;
+			color:white;
+			font-size:14px;
+			background-color:#5aac44;
+			border-radius:3px;
+			font-family: sans-serif;
+			cursor:pointer;
+			text-align:center;
+			padding-top:3px;
+		}
+
+		.cards-list .cards .card-description{
+			font-family: sans-serif;
+			font-size:16px;
+			height:0px;
+			display:inline-block;
+			overflow: hidden;
+			border:none;
+			outline:none;
+			padding:unset;
+			resize:none;
+		}
+
+		.cards-list .cards.active .card-description{
+			height:auto;
+			min-height: 50px;
+			width:100%;
+		}

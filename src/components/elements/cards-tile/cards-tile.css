@@ -1,0 +1,198 @@
+		.card-list {
+			margin-top:20px;
+			display:inline-flex;
+			width:100%;
+			position:absolute;
+			top:0;
+			right:0;
+			bottom:0;
+			left:0;
+		}
+
+		.card-list .card-list-tile {
+			width:275px;
+			height:auto;
+			display:table;
+			min-height: 50px;
+			max-height:100%;
+			overflow-y: scroll;
+			position:relative;
+			border-radius:3px;
+			background-color:#dfe3e6;
+			margin-left:20px;
+			padding:15px 10px 50px;
+		}
+
+
+		.card-list .card-list-tile .delete-btn {
+			position:absolute;
+			height:25px;
+			width:25px;
+			right:20px;
+			top:15px;
+			content:url('img/delete-icon.png');
+			cursor:pointer;
+		}
+
+		.card-list .card-list-tile .save-btn {
+			position:absolute;
+			height:25px;
+			width:60px;
+			right:49px;
+			top:15px;
+			text-align:center;
+			padding-top:5px;
+			cursor:pointer;
+			background-color:#5aac44;
+			font-family:Arial;
+			font-size:16px;
+			color:white;
+			border-radius:3px;
+		}
+
+		.card-list .card-list-tile .cancel-btn {
+			position:absolute;
+			height:25px;
+			width:25px;
+			right:13px;
+			top:18px;
+			content:url('img/close-icon-v2.png');
+			cursor:pointer;
+		}
+
+		.card-list .card-list-tile .edit-btn {
+			position:absolute;
+			height:25px;
+			width:25px;
+			right:50px;
+			top:15px;
+			content:url('img/pencil-icon.png');
+			cursor:pointer;
+		}
+
+
+		.card-list .card-list-tile._active{
+			padding-bottom:10px;
+		}
+
+		.card-list .card-list-tile .new-card-container{
+			position:absolute;
+			left:0;
+			bottom:5px;
+			padding:0px 20px 0px;
+			right: 0;
+			display:inline-flex;
+			height:30px;
+		}
+
+		.card-list .card-list-tile .add-form-container{
+			position:relative;
+			display:block;
+			margin-top:20px;
+			height:90px;
+		}
+
+		.card-list .card-list-tile .add-form-container .input-title-field{
+			width:100%;
+			outline:none;
+			border:none;
+			border-radius:3px;
+			padding:10px 8px 10px;
+			height:30px;
+		}
+
+		.card-list .card-list-tile .add-form-container .add-close-container{
+			position:absolute;
+			left:0;
+			right:0;
+			bottom:5px;
+			height:40px;
+			display:inline-flex;
+		}
+
+		.card-list .card-list-tile .add-form-container .add-close-container .add-button{
+			font-size:16px;
+			font-family: Arial;
+			color:white;
+			background-color:#5aac44;
+			height:20px;
+			padding:10px 15px 10px;
+			border-radius:3px;
+			cursor: pointer;
+		}
+
+		.card-list .card-list-tile .add-form-container .add-close-container .close-button{
+			width:30px;
+			height:30px;
+			margin-top:auto;
+			margin-bottom:auto;
+			margin-left:10px;
+			content:url('img/close-icon.png');
+			cursor: pointer;
+		}
+
+		.card-list .card-list-tile .new-card-container .btn-label{
+			font-family:Arial;
+			font-size:14px;
+			color:#17394d;
+			cursor: pointer;
+		}
+
+		.card-list .card-list-tile .new-card-container.hidden{
+			display:none;
+		}
+
+		.card-list .card-list-tile .column-title{
+			font-size:20px;
+			font-family:sans-serif;
+			text-align: left;
+			margin-bottom:10px;
+			display:inline-block;
+			width:61%;
+			border:none;
+			outline:none;
+			background-color:transparent;
+			color:black;
+			overflow:hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.card-list .card-list-tile .cards.drag-active{
+			margin-top:70px;
+		}
+
+		.card-list .card-list-tile .cards{
+			background-color:white;
+			border-radius:3px;
+			height:auto;
+			min-height:30px;
+			display:block;
+			margin-top:15px;
+			cursor:pointer;
+			position:relative;
+			padding:10px 8px 10px;
+			overflow:hidden;
+		}
+
+
+		.card-list .card-list-tile .cards .card-title{
+			font-family: sans-serif;
+			font-size:18px;
+			height:20px;
+			display:inline-block;
+			margin-bottom:10px;
+			width:100%;
+		}
+
+		.card-list .card-list-tile .cards .card-description{
+			font-family: sans-serif;
+			font-size:16px;
+			height:0px;
+			display:inline-block;
+			overflow: hidden;
+		}
+
+		.card-list .card-list-tile .cards.active .card-description{
+			height:auto;
+		}
