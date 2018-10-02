@@ -1,0 +1,70 @@
+.new-column-wrapper {
+	width:275px;
+	height:auto;
+	min-height:50px;
+	margin-left:20px;
+	display:block;
+	border-radius: 3px;
+	color:white;
+	font-family:Arial;
+	font-size:16px;
+}
+
+.new-column-wrapper .new-column-container {
+	width:100%;
+	height:auto;
+	min-height:30px;
+	display:inline-flex;
+	background-color: #17394d;
+	padding:6px;
+	border-radius:3px;
+}
+
+.new-column-wrapper .new-column-container.active .new-column-title {
+	width:100%;
+	border-radius:3px;
+	height:30px;
+	border: 1px solid #5ba4cf;
+	padding:3px 6px 3px;
+	margin-bottom:10px;
+}
+
+.new-column-wrapper .new-column-container.active .button-container {
+	width:100%;
+	display:inline-flex;
+	height:30px;
+}
+
+.new-column-wrapper .new-column-container.active .button-container .add-button{
+	font-size: 16px;
+    font-family: Arial;
+    color: white;
+    background-color: #5aac44;
+    height: 20px;
+    padding: 5px 20px 5px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.new-column-wrapper .new-column-container.active .button-container .cancel-button{
+	width:30px;
+	height:30px;
+	margin-top:auto;
+	margin-bottom:auto;
+	margin-left:10px;
+	content:url('../img/close-icon.png');
+    cursor: pointer;
+}
+
+.new-column-wrapper .new-column-container.active {
+	background-color:#dfe3e6;
+	display:block;
+}
+
+.new-column-wrapper .new-column-container.active span{
+	display:none;
+}
+.new-column-wrapper .new-column-container span {
+	margin:auto;
+	cursor:pointer;
+}

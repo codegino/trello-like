@@ -20,7 +20,7 @@
 			border-radius:3px;
 			background-color:#dfe3e6;
 			margin-left:20px;
-			padding:15px 10px 50px;
+			padding:15px 10px 10px;
 		}
 
 
@@ -68,78 +68,6 @@
 			top:15px;
 			content:url('img/pencil-icon.png');
 			cursor:pointer;
-		}
-
-
-		.card-list .card-list-tile._active{
-			padding-bottom:10px;
-		}
-
-		.card-list .card-list-tile .new-card-container{
-			position:absolute;
-			left:0;
-			bottom:5px;
-			padding:0px 20px 0px;
-			right: 0;
-			display:inline-flex;
-			height:30px;
-		}
-
-		.card-list .card-list-tile .add-form-container{
-			position:relative;
-			display:block;
-			margin-top:20px;
-			height:90px;
-		}
-
-		.card-list .card-list-tile .add-form-container .input-title-field{
-			width:100%;
-			outline:none;
-			border:none;
-			border-radius:3px;
-			padding:10px 8px 10px;
-			height:30px;
-		}
-
-		.card-list .card-list-tile .add-form-container .add-close-container{
-			position:absolute;
-			left:0;
-			right:0;
-			bottom:5px;
-			height:40px;
-			display:inline-flex;
-		}
-
-		.card-list .card-list-tile .add-form-container .add-close-container .add-button{
-			font-size:16px;
-			font-family: Arial;
-			color:white;
-			background-color:#5aac44;
-			height:20px;
-			padding:10px 15px 10px;
-			border-radius:3px;
-			cursor: pointer;
-		}
-
-		.card-list .card-list-tile .add-form-container .add-close-container .close-button{
-			width:30px;
-			height:30px;
-			margin-top:auto;
-			margin-bottom:auto;
-			margin-left:10px;
-			content:url('img/close-icon.png');
-			cursor: pointer;
-		}
-
-		.card-list .card-list-tile .new-card-container .btn-label{
-			font-family:Arial;
-			font-size:14px;
-			color:#17394d;
-			cursor: pointer;
-		}
-
-		.card-list .card-list-tile .new-card-container.hidden{
-			display:none;
 		}
 
 		.card-list .card-list-tile .column-title{

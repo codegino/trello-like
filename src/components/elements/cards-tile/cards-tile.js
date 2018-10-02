@@ -120,78 +120,17 @@
 		cardDiv.appendChild(deleteBtn);
 		cardDiv.appendChild(editBtn);
 
-		let cardTemplate = currentDocument.createElement('cards-container'); //mount the card template component
-		cardTemplate.id = 'cards-container-' + column.id;
-
 		cardDiv.appendChild(columnTitle);
+
+		let cardTemplate = currentDocument.createElement('cards-container');
+		cardTemplate.id = `cards-container-${column.id}`;
 		cardDiv.appendChild(cardTemplate);
 
-		let addContainer = currentDocument.createElement('div'); //Element for add button
-		addContainer.className ='new-card-container';
-
-		let addButton = currentDocument.createElement('div');
-		addButton.className = 'btn-label';
-		addButton.innerText = 'Add a new card';
-
-		//Add event listener for the add button 
-		addButton.onclick = (e) => {
-			addContainer.classList.add('hidden');
-			cardDiv.classList.add('_active');
-
-			//initialize method in creating a new add form
-			let form = createHTMLAddForm(self,addContainer ,cardDiv, column.id);
-
-			cardDiv.appendChild(form);
-
-		}
-
-		addContainer.appendChild(addButton);
-
-		cardDiv.appendChild(addContainer);
+		let newCardTemplate = currentDocument.createElement('new-card'); //Add template for a new card container
+		newCardTemplate.id = `new-card-comp-${column.id}`;
+		cardDiv.appendChild(newCardTemplate);
 
 		return cardDiv;
-	}
-
-	//create a new div for adding card
-	function createHTMLAddForm(self, addElement, divElement, columnId) {
-			let addForm = currentDocument.createElement('div');
-			addForm.className = 'add-form-container';
-
-			let inputField = currentDocument.createElement('input');
-			inputField.className = 'input-title-field';
-			inputField.autofocus = true;
-
-			let addAndCloseContainer = currentDocument.createElement('div');
-			addAndCloseContainer.className = 'add-close-container';
-
-			let addBtn  = currentDocument.createElement('div');
-			addBtn.innerText = 'Add Card';
-			addBtn.className = 'add-button';
-
-			inputField.focus();
-			addBtn.onclick = (e) => {
-				addNewCard(self, inputField,columnId);
-			}
-
-			let closeBtn = currentDocument.createElement('img');
-			closeBtn.className = 'close-button';
-
-			//Add event listener for close btn
-			closeBtn.onclick = (e) => {
-				addElement.classList.remove('hidden');
-				divElement.classList.remove('_active');
-				divElement.removeChild(addForm);
-			}
-
-			addAndCloseContainer.appendChild(addBtn);
-			addAndCloseContainer.appendChild(closeBtn);
-
-
-			addForm.appendChild(inputField);
-			addForm.appendChild(addAndCloseContainer);
-
-
-			return addForm;
 	}
 
 	//Method to add new cards 
@@ -275,17 +214,29 @@
 				this.populateData(column.id);
 			});
 
-			let addNewColumnTemplate = currentDocument.createElement('new-column-template');
+			let addNewColumnTemplate = currentDocument.createElement('new-column');
 			divElem.appendChild(addNewColumnTemplate);
+
+			this.shadowRoot.addEventListener("AddNewColumn", (e) => {
+				console.log(e.detail.title);
+			});
+
+			this.shadowRoot.addEventListener("AddNewCard", (e) => {
+				this.refreshData(e.detail.columnId);
+			});
 		}
 
 
 		//Populate data of card container
 		populateData(columnId) {
-			let cardsContainer = this.shadowRoot.querySelector('#cards-container-'+ columnId);
+			let cardsContainer = this.shadowRoot.querySelector(`#cards-container-${columnId}`);
 			cardsContainer.columnId = columnId;
 			cardsContainer.cardsList = this.cardsList;
 			cardsContainer.populateCardData();
+
+			let newCardComponent = this.shadowRoot.querySelector(`#new-card-comp-${columnId}`);
+			newCardComponent.columnId = columnId;
+			newCardComponent.cardsList = this.cardsList;
 		}
 
 		//call this method to refresh data of card container component

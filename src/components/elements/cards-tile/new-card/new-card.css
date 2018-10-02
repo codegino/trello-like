@@ -1,0 +1,72 @@
+.new-card-wrapper {
+	position:relative;
+	height:auto;
+	margin-top:20px;
+	min-height:30px;
+}
+
+.new-card-wrapper .new-card-container {
+	display:inline-flex;
+	height:30px;
+	width:100%;
+	padding: 0px 20px 0px;
+}
+
+.new-card-wrapper .new-card-container.active {
+	display:block;
+	height:90px;
+	margin-top:20px;
+	padding:unset;
+}
+
+.new-card-wrapper .new-card-container.active .new-card-title {
+	width:100%;
+	outline:none;
+	border:none;
+	border-radius:3px;
+	padding:10px 8px 10px;
+	height:30px;
+}
+
+.new-card-wrapper .new-card-container .add-close-container{
+	display:none;
+}
+
+.new-card-wrapper .new-card-container.active .add-close-container{
+	position:relative;
+	height:40px;
+	display:inline-flex;
+	width:100%;
+	margin-top:15px;
+}
+
+.new-card-wrapper .new-card-container.active .add-button{
+	font-size:16px;
+	font-family: Arial;
+	color:white;
+	background-color:#5aac44;
+	height:20px;
+	padding:10px 15px 10px;
+	border-radius:3px;
+	cursor: pointer;
+}
+
+.new-card-wrapper .new-card-container.active .close-button{
+	width:30px;
+	height:30px;
+	margin-top:auto;
+	margin-bottom:auto;
+	margin-left:10px;
+	content:url('../img/close-icon.png');
+	cursor: pointer;
+}
+
+.new-card-wrapper .new-card-container .inactive-label{
+	font-family:Arial;
+	font-size:14px;
+	color:#17394d;
+	cursor: pointer;
+	height:20px;
+	margin-top:auto;
+	margin-bottom:auto;
+}
