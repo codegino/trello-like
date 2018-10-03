@@ -18,7 +18,10 @@
 
 
 	function moveCard(self, columnElem, cardElemId) {
-		let columnId = columnElem !== null ? parseInt(columnElem) : 0;
+		if(columnElem === null) {
+			return;
+		}
+		let columnId = parseInt(columnElem);
 		let cardId = parseInt(cardElemId.replace("card_", ""));
 		let cardData = [];
 
