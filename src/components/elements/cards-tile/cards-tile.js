@@ -18,12 +18,14 @@
 
 
 	function moveCard(self, columnElem, cardElemId) {
-		if(columnElem === null) {
-			return;
-		}
 		let columnId = parseInt(columnElem);
 		let cardId = parseInt(cardElemId.replace("card_", ""));
 		let cardData = [];
+
+		if(cardId === undefined || cardId === null || isNaN(cardId)
+			|| columnId === undefined || columnId === null || isNaN(columnId)) {
+			return;
+		}
 
 		fetch(`http://localhost:3000/cards/${cardId}`)
 		.then((res) => res.json())
