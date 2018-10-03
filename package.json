@@ -1,0 +1,19 @@
+{
+	"name": "trello-like-master",
+	"version": "1.0.0",
+	"description": "How to run project",
+	"main": "index.js",
+	"dependencies": {},
+	"devDependencies": {
+		"json-server": "^0.14.0",
+		"static-server": "^2.2.1"
+	},
+	"scripts": {
+		"test": "echo \"Error: no specified\" && exit 1",
+		"start": "./node_modules/.bin/static-server ./src/ -p 8080",
+		"server": "./node_modules/.bin/json-server --watch ./src/resources/db.json"
+	},
+	"keywords": [],
+	"author": "",
+	"licence": "ISC"
+}
