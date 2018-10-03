@@ -1,6 +1,27 @@
 (function(){
 	const currentDocument = document.currentScript.ownerDocument;
+ 	let searchTimeout;
 
+	function delayedSearchCards(self, searchQuery) {
+		if(searchTimeout) {
+			clearTimeout(searchTimeout);
+		}
+
+		searchTimeout = setTimeout(function() {
+			searchCard(self, searchQuery);
+		}, 1000);
+	}
+
+	function searchCard(self, searchQuery) {
+		let event = new CustomEvent("SearchQuery", {
+			detail : {
+				searchQuery : searchQuery
+			},
+			bubbles : true
+		});
+		self.dispatchEvent(event);
+		searchQuery = '';
+	}
 
 	class SearchBar extends HTMLElement {
 		constructor() {
@@ -27,11 +48,12 @@
 			searchField.className = 'search-field';
 
 			//Add a on change event for the search field
-			searchField.oninput = () => {
-				let event = new CustomEvent("SearchingCard", {
-					searchQuery : this.value
-				});
-				this.dispatchEvent(event);
+			searchField.oninput = (e) => {
+				if(e.target.value.trim().length === 0 && e.data === " ") {
+					e.preventDefault();
+					return;
+				}
+				delayedSearchCards(this, e.target.value.trim());
 			}
 
 			divElement.appendChild(searchField);

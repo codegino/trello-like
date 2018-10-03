@@ -1,6 +1,27 @@
 (function(){
 	const currentDocument = document.currentScript.ownerDocument;
 
+	function saveNewColumn(self, newColumnTitle) {
+		fetch('http://localhost:3000/columns', {
+			method: 'POST',
+			headers : {
+				'Accept': 'application/json',
+				'Content-Type' : 'application/json'
+			},
+			body: JSON.stringify({
+				title : newColumnTitle
+			})
+		})
+		.then(res => res.json()
+		).then(res => {
+			let event = new CustomEvent("AddNewColumn",{
+				bubbles: true
+			})
+			self.dispatchEvent(event)
+		}).catch(
+		err => console.log(err));
+	}
+
 	function createContainer(self){
 		let addContainer = currentDocument.createElement('div');
 		addContainer.className = 'new-column-container';
@@ -41,15 +62,29 @@
 
 		addButton.onclick = () => {
 
-			let isNull = inputField.value.trim() === 0;
+			let columnTitle =  inputField.value.trim();
+			columnTitle = columnTitle.replace(/ +/g, " ");
 
-			let event = new CustomEvent("AddNewColumn",{
-				detail : {
-					title : inputField.value.trim()
-				},
-				bubbles: true
+			let isNull = columnTitle.trim().length === 0;
+			let isDuplicate = false;
+
+			self.columns.forEach(c => {
+				if(columnTitle.toLowerCase() === c.title.toString().toLowerCase()) {
+					isDuplicate = true;
+				}
 			});
-			self.dispatchEvent(event);
+
+			if(isNull) {
+				alert('Column title should at least contain 1 character');
+			}
+
+			if(isDuplicate) {
+				alert('Column title already exist');
+			}
+
+			if(!isDuplicate && !isNull){
+				saveNewColumn(self, columnTitle);
+			}
 		}
 
 		buttonContainer.appendChild(addButton);
@@ -65,7 +100,7 @@
 	class NewColumn extends HTMLElement {
 		constructor(){
 			super();
-			this.existingColumns = [];
+			this.columns = [];
 	}
 
 	connectedCallback() {

@@ -1,6 +1,59 @@
 (function(){
 	const currentDocument = document.currentScript.ownerDocument;
 
+
+	function searchCards(self) {
+		if(self.searchQuery.trim().length === 0) {
+			fetchColumns(self);
+		}else{
+			fetch(`http://localhost:3000/cards?q=${self.searchQuery}`)
+			.then(res => res.json())
+			.then(res => {
+				self.cardsList = res
+				self.render()
+			})
+			.catch(err => console.log(err));
+		}
+	}
+
+
+	function moveCard(self, columnElem, cardElemId) {
+		let columnId = columnElem !== null ? parseInt(columnElem) : 0;
+		let cardId = parseInt(cardElemId.replace("card_", ""));
+		let cardData = [];
+
+		fetch(`http://localhost:3000/cards/${cardId}`)
+		.then((res) => res.json())
+		.then((res) => {
+			res.columnId = columnId
+			updatecard(self, res)
+		})
+		.catch(err => console.log(err));
+	}
+
+	function updatecard(self, data){
+		fetch(`http://localhost:3000/cards/${data.id}`, {
+			method :'PUT',
+			headers : {
+				'Accept': 'application/json',
+				'Content-Type' : 'application/json'
+			},
+			body : JSON.stringify(data)
+		})
+		.then(res => res.json())
+		.then(res => fetchColumns(self))
+		.catch(err => console.log(err));
+	}
+
+	function deleteColumn(self, columnId) {
+		fetch(`http://localhost:3000/columns/${columnId}`, {
+			method : 'DELETE'
+		})
+		.then(res => res.json())
+		.then(res => fetchColumns(self))
+		.catch(err => console.log(err));
+	}
+
 	//Update column title
 	function updateColumnTitle(self, column) {
 		fetch(`http://localhost:3000/columns/${column.id}`, {
@@ -13,7 +66,7 @@
 		})
 		.then(res => res.json())
 		.then(res => fetchColumns(self))
-		.catch(err => console.log(errr));
+		.catch(err => console.log(err));
 	}
 
 	function fetchColumns(self) {
@@ -46,6 +99,7 @@
 	function createCardTile(self, column) {
 		let cardDiv = currentDocument.createElement('div');
 		cardDiv.className = 'card-list-tile';
+		cardDiv.setAttribute('column-id', column.id);
 		cardDiv.id = 'tile_' + column.id;
 
 		let columnTitle = currentDocument.createElement('input');
@@ -68,6 +122,13 @@
 		cancelBtn.className = 'cancel-btn';
 		cancelBtn.hidden = true;
 
+		cardDiv.ondrop = (e) => {
+			moveCard(self, e.target.getAttribute('column-id'), e.dataTransfer.getData("text"));
+		}
+
+		cardDiv.ondragover = (e) => {
+			e.preventDefault();
+		}
 
 		let tempValue =''; 
 		editBtn.onclick = (e) => { //Create event for edit button for column tile
@@ -78,6 +139,10 @@
 			cancelBtn.hidden = false;
 			saveBtn.hidden = false;
 			e.target.hidden = true;
+		}
+
+		deleteBtn.onclick = (e) => {
+			deleteColumn(self, column.id);
 		}
 
 		cancelBtn.onclick = (e) => {
@@ -94,8 +159,11 @@
 		saveBtn.onclick = (e) => {
 			let isNull = columnTitle.value.trim().length === 0; //check if inputted column is null or no alphanumeric characters
 			let isDuplicate = false;
+			let title = columnTitle.value.trim();
+			title = title.replace(/ +/g, " ");
+
 			self.columns.forEach(c => {
-				if(columnTitle.value.trim().toLowerCase() === c.title.toString().trim().toLowerCase()){
+				if(title.toLowerCase() === c.title.toString().trim().toLowerCase()){
 					isDuplicate = true;
 				}
 			});
@@ -109,7 +177,7 @@
 			}
 
 			if(!isNull && !isDuplicate) {
-				column.title = columnTitle.value.trim();
+				column.title = title;
 				updateColumnTitle(self, column);
 			}
 
@@ -124,6 +192,7 @@
 
 		let cardTemplate = currentDocument.createElement('cards-container');
 		cardTemplate.id = `cards-container-${column.id}`;
+		cardTemplate.setAttribute('column-id', column.id);
 		cardDiv.appendChild(cardTemplate);
 
 		let newCardTemplate = currentDocument.createElement('new-card'); //Add template for a new card container
@@ -186,6 +255,7 @@
 			super();
 			this.cardsList = [];
 			this.columns = [];
+			this.searchQuery ='';
 		}
 
 		connectedCallback() {
@@ -215,14 +285,22 @@
 			});
 
 			let addNewColumnTemplate = currentDocument.createElement('new-column');
+			addNewColumnTemplate.id ='new-column';
 			divElem.appendChild(addNewColumnTemplate);
 
+			let newColumnComponent = this.shadowRoot.querySelector("#new-column");
+			newColumnComponent.columns = this.columns;
+
 			this.shadowRoot.addEventListener("AddNewColumn", (e) => {
-				console.log(e.detail.title);
+				fetchColumns(this);
+			});
+
+			this.shadowRoot.addEventListener("CardDeleted", (e) => {
+				fetchColumns(this);
 			});
 
 			this.shadowRoot.addEventListener("AddNewCard", (e) => {
-				this.refreshData(e.detail.columnId);
+				fetchColumns(this);
 			});
 		}
 
@@ -237,12 +315,17 @@
 			let newCardComponent = this.shadowRoot.querySelector(`#new-card-comp-${columnId}`);
 			newCardComponent.columnId = columnId;
 			newCardComponent.cardsList = this.cardsList;
+
 		}
 
 		//call this method to refresh data of card container component
 		refreshData(columnId) {
 			let cardsContainer = this.shadowRoot.querySelector('#cards-container-'+ columnId);
 			cardsContainer.refresh(columnId);
+		}
+
+		fetchCardsByDescription(){
+			searchCards(this);
 		}
 	}
 	customElements.define('cards-tile', Cards);

@@ -62,13 +62,13 @@
 	}
 
 	function addNewCard(self, data) {
-		let title =  data.title.toString().toLowerCase().trim();
+		let title =  data.title.toString().trim();
 		title = title.replace(/ +/g, " ");
 		data.title = title;
 		let isNull = title.length === 0; //check if data has valid character
 		let isDuplicate = false;
 		self.cardsList.forEach(c => { 
-			 if(title  === c.title.toString().toLowerCase()) {
+			 if(title.toLowerCase()  === c.title.toString().toLowerCase()) {
 			 	isDuplicate = true;
 			 }
 		});
@@ -101,9 +101,7 @@
 			self.dispatchEvent(event)
 			}).catch(
 				err => console.log(err));
-
 		}
-
 	}
 
 	class NewCard extends HTMLElement {

@@ -6,12 +6,17 @@
 			method : 'DELETE'
 		})
 		.then(res => res.json())
-		.then(res => self.refresh(card.columnId))
+		.then(res => {
+			let event = new CustomEvent("CardDeleted", {
+				bubbles : true
+			})
+			self.dispatchEvent(event)
+		})
 		.catch(err => console.log(err));
 		return false;
 	}
 
-	function updateCardDescription(self, data) {
+	function updateCard(self, data) {
 		fetch(`http://localhost:3000/cards/${data.id}` , {
 			method : 'PUT',
 			headers : {
@@ -24,6 +29,18 @@
 		.then(res => self.refreshComponent())
 		.catch(err => console.log(err));
 		return false;
+	}
+
+	function autoResize(textarea) {
+    	textarea.style.height = (textarea.scrollHeight)+"px"
+	}
+
+	function resizeTextarea(textarea, isActive) {
+		if(isActive) {
+			textarea.style.height = (25 + textarea.scrollHeight) + 'px';
+			return;
+		}
+		textarea.removeAttribute('style');
 	}
 
 	//Create cards that will be appended to each column
@@ -74,8 +91,11 @@
 		saveBtn.onclick = (e) => {
 			let isDuplicate = false;
 			let isNull = cardTitle.value.trim().length === 0;
+			let title = cardTitle.value.trim();
+			title = title.replace(/ +/g, " ");
+
 			self.cardsList.forEach(c => {
-				if(cardTitle.value.trim().toLowerCase() === c.title.toString().toLowerCase()){
+				if(title.toLowerCase() === c.title.toString().toLowerCase()){
 					isDuplicate = true;
 				}
 			});
@@ -88,9 +108,9 @@
 				alert('Card title already exist');
 			}
 
-			card.title = cardTitle.value.trim();
+			card.title = title;
 			if(!isDuplicate && !isNull) {
-				updateCardDescription(self, card);
+				updateCard(self, card);
 				deleteBtn.hidden = false;
 				editBtn.hidden = false;
 				saveBtn.hidden = true;
@@ -131,12 +151,14 @@
 
 		div.appendChild(cardTitle);
 
+
+		let isActive = false;
 		let cardDescription = currentDocument.createElement('textarea');
 		cardDescription.className ='card-description';
 		cardDescription.innerText = card.description === undefined ? '' : card.description;
 		cardDescription.placeholder = 'Place your description here... (optional)';
 		cardDescription.setAttribute('cols', 20);
-		cardDescription.setAttribute('rows', 5);
+
 
 		cardDescription.onfocus = (e) => {
 			bubble = true;
@@ -146,10 +168,13 @@
 		//Automatically saves description onblur of textarea
 		cardDescription.onblur = (e) => {
 			card.description = e.target.value;
-			bubble = updateCardDescription(self, card);
+			bubble = updateCard(self, card);
 			div.click();
 		}
 
+		cardDescription.oninput = (e) => {
+			autoResize(cardDescription);
+		}
 
 		div.appendChild(cardDescription);
 
@@ -159,6 +184,8 @@
 				return;
 			}
 			div.classList.toggle('active');
+			isActive = !isActive;
+			resizeTextarea(cardDescription, isActive);
 		}
 		// Drag events for cards
 		div.ondragstart = (e) => {
@@ -228,7 +255,7 @@
 		}
 
 		refresh(columnId) {
-			fetch('http://localhost:3000/cards?columnId='+columnId)
+			fetch('http://localhost:3000/cards')
 			.then((response) => response.json())
 			.then((responseText) => {
 				this.cardsList = responseText; //Set the cards list

@@ -1,10 +1,10 @@
 		.cards-list{
 			display:block;
 			height:auto;
-			min-height:70px;
+			min-height:10px;
 			width:100%;
 			position: relative;
-			z-index: 	10;
+			z-index: 10;
 		}
 
 		.cards-list .column-title{
